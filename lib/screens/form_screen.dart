@@ -1,3 +1,5 @@
+import 'package:estudando_mobile/components/task.dart';
+import 'package:estudando_mobile/data/task_dao.dart';
 import 'package:estudando_mobile/data/task_inherited.dart';
 import 'package:flutter/material.dart';
 
@@ -25,23 +27,20 @@ class _FormScreenState extends State<FormScreen> {
     return true;
   }
 
-  bool valueValidator(String? value){
-    if(value != null && value.isEmpty){
+  bool valueValidator(String? value) {
+    if (value != null && value.isEmpty) {
       return true;
     }
     return false;
   }
 
-  bool difficultyValidator(String? value){
-
-    if(value != null && value.isEmpty){
-      if(int.parse(value) > 5 || int.parse(value) < 1) {
+  bool difficultyValidator(String? value) {
+    if (value != null && value.isEmpty) {
+      if (int.parse(value) > 5 || int.parse(value) < 1) {
         return true;
       }
     }
     return false;
-
-
   }
 
   @override
@@ -157,10 +156,12 @@ class _FormScreenState extends State<FormScreen> {
                         // print(nameController.text);
                         // print(int.parse(difficultyController.text));
                         // print(imageController.text);
-                        TaskInherited.of(widget.taskContext).newTask(
-                          nameController.text,
-                          imageController.text,
-                          int.parse(difficultyController.text),
+                        taskDao().save(
+                          Task(
+                            nameController.text,
+                            imageController.text,
+                            int.parse(difficultyController.text),
+                          ),
                         );
                         ScaffoldMessenger.of(context)
                             .showSnackBar(const SnackBar(
